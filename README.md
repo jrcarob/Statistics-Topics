@@ -1,10 +1,7 @@
-The [probability and statistics cookbook][stat-cookbook] contains a succinct
-representation of various topics in probability theory and statistics. It
-provides a comprehensive mathematical reference reduced to its essence, rather
+Los fundamentos de probabilidad y estadística contienen [probability and statistics cookbook][stat-cookbook] a succinct representation of various topics in probability theory and statistics. It provides a comprehensive mathematical reference reduced to its essence, rather
 than aiming for elaborate explanations.
 
-Feel encouraged to extend the cookbook by forking it and submitting pull
-requests.
+Feel encouraged to extend the cookbook by forking it and submitting pull requests.
 
 Build Setup
 -----------
