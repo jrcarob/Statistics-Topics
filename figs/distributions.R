@@ -21,7 +21,6 @@ theme_update(legend.key=element_rect(colour="white"),
 # FIXME: is it possible to move this statement into theme_update?
 scale_color_discrete = function(...) scale_color_brewer(..., palette="Dark2")
 
-
 # --------------------------------------------------------------------------- #
 
 make.dist.fn <- function(mode, dist) {
@@ -45,7 +44,8 @@ plot.dist <- function(xseq, theta, dist, mode, title, lab.fn) {
   values <- make.data(mode, dist, theta, xseq)
   molten <- melt(values, 1)
   labels <- apply(theta, 1, function(x) do.call(lab.fn, as.list(t(x))))
-  p <- ggplot(molten, aes(x=x, y=value, color=variable, linetype=variable)) +
+
+    p <- ggplot(molten, aes(x=x, y=value, color=variable, linetype=variable)) +
        ggtitle(title) +
        ylab(toupper(mode)) +
        scale_color_discrete(labels=labels) +
@@ -88,7 +88,7 @@ plot.uniform.cdf.discrete <- function() {
     geom_segment(aes(x=6, y=0.8, xend=6.9, yend=0.8)) +
     geom_point(aes(x=xseq+1), size=point_size, color="white", shape=19) +
     geom_point(aes(x=xseq+1), size=point_size, shape=1) +
-    ggtitle("Uniform (discrete)") +
+    ggtitle("Uniforme (discreta)") +
     labs(x="x", y="CDF") +
     theme(panel.grid.minor=element_blank()) +
     scale_x_continuous(name="x", limits=c(3.1, 6.9), breaks=4:6,
@@ -103,7 +103,7 @@ plot.uniform.cdf.continuous <- function() {
   x <- as.data.frame(rbind(c(0,0,2,0), c(2,0,6,1), c(6,1,8,1)))
   ggplot(x) +
     geom_segment(aes(x=V1, y=V2, xend=V3, yend=V4)) +
-    ggtitle("Uniform (continuous)") +
+    ggtitle("Uniforme (continua)") +
     labs(x="x", y="CDF") +
     theme(panel.grid.minor=element_blank()) +
     scale_x_continuous(breaks=c(2,6), labels=c("a", "b")) +
@@ -116,7 +116,7 @@ plot.uniform.pmf <- function() {
     aes(x=x0, y=y1) +
     geom_point(size=point_size) +
 #    geom_segment(aes(x=x1, xend=x1, y=y0, yend=y1), linetype="dashed") +
-    labs(title="Uniform (discrete)") +
+    labs(title="Uniforme (discreta)") +
     theme(panel.grid.minor=element_blank()) +
     scale_x_discrete(name="x",
                      breaks=xseq,
@@ -152,7 +152,7 @@ plot.uniform.pdf <- function() {
     geom_point(data=hollow, aes(x=x, y=y), size=point_size, shape=21,
                fill="white") +
     theme(panel.grid.minor=element_blank()) +
-    ggtitle("Uniform (continuous)") +
+    ggtitle("Uniforme (continua)") +
     scale_x_continuous(name="x",
                        breaks=c(solid[1,2], solid[3,1]),
                        limits=c(solid[1,1], solid[3,2]),
@@ -174,7 +174,7 @@ plot.binomial = function(mode, xmin=1, xmax=40,
 
 plot.geometric <- function(mode, xmin=0, xmax=10,
                            theta=data.frame(p=c(0.2, 0.5, 0.8)),
-                           title="Geometric") {
+                           title="Geométrica") {
   lab.fn <- function(x) substitute(p==i, list(i=x))
   plot.discrete(xmin, xmax, theta, "geom", mode, title, lab.fn)
 }
@@ -208,7 +208,7 @@ plot.lognormal <- function(mode, xmin=0, xmax=3,
 
 plot.student <- function(mode, xmin=-5, xmax=5,
                          theta=data.frame(c(1,2,5,Inf)),
-                         title=expression(bold("Student\'s") ~ italic(t))) {
+                         title=expression(italic(t) ~ bold("Student"))) {
   lab.fn <- function(x) {
     if (x == Inf)
       quote(nu==infinity)
@@ -235,7 +235,7 @@ plot.f <- function(mode, xmin=0, xmax=5,
 
 plot.exp <- function(mode, xmin=0, xmax=5,
                      theta=data.frame(c(2,1,0.4)),
-                     title="Exponential") {
+                     title="Exponencial") {
   lab.fn <- function(x) substitute(beta==i, list(i=1/x))
   plot.continuous(xmin, xmax, theta, "exp", mode, title, lab.fn)
 }
@@ -262,7 +262,7 @@ pinvgamma <- function(q, shape = 1, rate = 1, scale = 1/rate,
 
 plot.invgamma <- function(mode, xmin=0, xmax=5,
                           theta=data.frame(a=c(1,2,3,3), b=c(1,1,1,0.5)),
-                          title="Inverse Gamma") {
+                          title="Gamma Inversa") {
   lab.fn <- function(x, y) substitute(list(alpha==i, beta==j), list(i=x, j=y))
   plot.continuous(xmin, xmax, theta, "invgamma", mode, title, lab.fn)
 }
@@ -312,6 +312,8 @@ plot.pareto <- function(mode, xmin=0.8, xmax=2.5,
 
 # --------------------------------------------------------------------------- #
 
+getwd()
+
 store <- function(name, p) {
   ggsave(paste(name, "pdf", sep="."), p)
 }
@@ -350,3 +352,4 @@ store("weibull-pdf", plot.weibull("pdf"))
 store("weibull-cdf", plot.weibull("cdf"))
 store("pareto-pdf", plot.pareto("pdf"))
 store("pareto-cdf", plot.pareto("cdf"))
+
