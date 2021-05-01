@@ -13,3 +13,4 @@
 figs/*
 !figs/relationships.pdf
 stat-cookbook.pdf
+.Rproj.user
